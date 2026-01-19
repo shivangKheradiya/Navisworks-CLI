@@ -212,7 +212,7 @@ Supports:
 
 ## 📄 License
 
-* MIT License
+* [MIT License](./LICENSE)
 
 ---
 
