@@ -16,6 +16,5 @@ namespace NavisworksCLI
         void SetScale(double XScale, double YScale, double ZScale);
         void AppendFile(string FileFullPathWithExtension);
         void SaveNWD(string FileFullPathWithExtension);
-        void SelectAll();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace NavisworksCLI
     {
         static void Main(string[] args)
         {
+            Debugger.Launch();
+
             var parsed = ParseArguments(args);
             var cli = new NavisworksCLI();
 
@@ -64,7 +67,7 @@ namespace NavisworksCLI
             }
 
             // 7. COLOUR
-            if (parsed.TryGetValue("setcolour", out var colour))
+            if (parsed.TryGetValue("colour", out var colour))
             {
                 var (r, g, b) = ParseVector3Byte(colour);
                 cli.SetColour(r, g, b);

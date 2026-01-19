@@ -57,8 +57,8 @@ NavisworksCLI.exe ^
   --position=(10,0,5) ^
   --orientation=(45,0,35) ^
   --scale=(1,1,0.5) ^
-  --transperancy=50 ^
-  --setcolour=(0,255,0) ^
+  --transperancy=0.5 ^
+  --colour=(0,255,0) ^
   --save="C:\db\Output.nwd"
 ```
 
@@ -74,8 +74,8 @@ NavisworksCLI.exe ^
 | `--orientation=(x,y,z)` | Rotation in degrees | `--orientation=(45,0,35)` |
 | `--scale=(x,y,z)` | Scale factors | `--scale=(1,1,0.5)` |
 | `--position=(x,y,z)` | Translation | `--position=(10,0,5)` |
-| `--setcolour=(r,g,b)` | RGB override | `--setcolour=(0,255,0)` |
-| `--transperancy=<value>` | Transparency (0–100) | `--transperancy=50` |
+| `--colour=(r,g,b)` | RGB override | `--colour=(0,255,0)` |
+| `--transperancy=<value>` | Transparency (0–1) | `--transperancy=0.5` |
 | `--save=<file>` | Save output NWD | `--save="output.nwd"` |
 
 ---
