@@ -1,88 +1,129 @@
-﻿# **NavisworksCLI – Command‑Line Automation for Autodesk Navisworks**
+﻿# **NavisworksCLI**
 
-NavisworksCLI is a lightweight, script‑friendly command‑line application designed to automate common operations in **Autodesk Navisworks Simulate/Manage**.  
-It enables batch processing, integration with external systems, and hands‑free model manipulation without opening the Navisworks UI.
+### Command-Line Automation Tool for Autodesk Navisworks
 
-The tool supports both:
+NavisworksCLI is a lightweight, script-friendly command-line automation tool for **Autodesk Navisworks Simulate and Manage**.
+It enables fully automated model processing, batch transformations, and headless execution for CI/CD pipelines, data preparation workflows, and enterprise BIM integrations.
 
-- **GUI Mode** – Launches Navisworks with UI  
-- **TTY Mode** – Runs silently without UI (ideal for automation)
+The tool supports both interactive and headless execution modes:
 
----
-
-## 🚀 **Features**
-
-### **File Operations**
-- Open Navisworks‑supported files (`.nwd`, `.nwf`, `.nwc`, etc...)
-- Append multiple models in a single command
-- Save the final model as `.nwd`
-
-### **Model Transformations**
-- Set **orientation** (X/Y/Z rotation)
-- Set **scale** (uniform or per‑axis)
-- Set **position** (translation)
-- Apply **colour override**
-- Apply **transparency override**
-
-### **Execution Pipeline (Fixed Order)**  
-The CLI always executes operations in the following sequence:
-
-1. Open file  
-2. Append files  
-3. Set orientation for document  
-4. Set scale for document
-5. Set position for document
-6. Set colour for document
-7. Set transparency for document
-8. Save NWD file
-
-Any missing argument is simply skipped.
+* **GUI Mode** — Runs Navisworks with visible UI
+* **Headless Mode** — Runs silently without UI (recommended for automation)
 
 ---
 
-# 📦 **Installation**
+## ✨ Key Features
 
-Place the compiled executable (`NavisworksCLI.exe`) anywhere in your PATH or call it directly.
+### 📂 File Operations
+
+* Open Navisworks-supported formats (`.nwd`, `.nwf`, `.nwc`, `.rvm`, `.step`, and more)
+* Append multiple models in a single run
+* Export processed models as `.nwd`
 
 ---
 
-# 🧭 **Usage**
+### 🔧 Model Transformations
 
-### **Example Command**
-```
+Apply transformations globally to the active document:
+
+* Rotation (X / Y / Z axis)
+* Scaling (uniform or per-axis)
+* Translation (position offset)
+* Colour override (RGB)
+* Transparency override (0–1 range)
+
+---
+
+### ⚙ Execution Pipeline (Deterministic Order)
+
+Operations are always executed in a fixed and predictable sequence:
+
+1. Open file
+2. Append files
+3. Apply orientation
+4. Apply scale
+5. Apply position
+6. Apply colour
+7. Apply transparency
+8. Save output NWD
+
+> Any missing argument is automatically skipped without error.
+
+This guarantees reproducible results across automation runs.
+
+---
+
+## 📦 Installation
+
+### Prerequisites
+
+* Autodesk Navisworks Simulate or Manage (installed locally) e.g. Repository built using Simulate 2026
+* Windows OS
+* .NET Runtime (as required by build target)
+
+---
+
+### Installation Steps
+
+1. Build or download `NavisworksCLI.exe`
+2. Place the executable in:
+
+   * Any folder included in your system `PATH`
+     **OR**
+   * Use absolute path while executing
+
+No additional configuration is required.
+
+---
+
+## 🧭 Usage
+
+### Basic Example
+
+```bash
 NavisworksCLI.exe ^
   --isgui=false ^
-  --open="C:\db\model.nwd" ^
-  --append="C:\db\part1.nwc;C:\db\pa12.step;C:\db\part1ww.rvm;\\Server32\x.nwd" ^
+  --open="C:\Models\main.nwd" ^
+  --append="C:\Models\part1.nwc;C:\Models\part2.rvm;\\Server\data\plant.nwd" ^
   --position=(10,0,5) ^
   --orientation=(45,0,35) ^
   --scale=(1,1,0.5) ^
-  --transperancy=0.5 ^
+  --transparency=0.5 ^
   --colour=(0,255,0) ^
-  --save="C:\db\Output.nwd"
+  --save="C:\Output\FinalModel.nwd"
 ```
 
 ---
 
-# 📝 **Argument Reference**
+### Headless Automation Example
 
-| Argument | Description | Example |
-|---------|-------------|---------|
-| `--isgui=true|false` | Run with or without Navisworks UI | `--isgui=false` |
-| `--open=<file>` | Opens a Navisworks file | `--open=model.nwd` |
-| `--append=<file1;file2;...>` | Appends multiple files | `--append="a.nwc;b.rvm"` |
-| `--orientation=(x,y,z)` | Rotation in degrees | `--orientation=(45,0,35)` |
-| `--scale=(x,y,z)` | Scale factors | `--scale=(1,1,0.5)` |
-| `--position=(x,y,z)` | Translation | `--position=(10,0,5)` |
-| `--colour=(r,g,b)` | RGB override | `--colour=(0,255,0)` |
-| `--transperancy=<value>` | Transparency (0–1) | `--transperancy=0.5` |
-| `--save=<file>` | Save output NWD | `--save="output.nwd"` |
+Recommended for servers and batch pipelines:
+
+```bash
+NavisworksCLI.exe --isgui=false --open=input.nwd --save=output.nwd
+```
 
 ---
 
-# 🧩 **Internal Workflow**
+## 📝 Command-Line Arguments
 
-The CLI parses arguments, validates them, and calls your `NavisworksCLI` class in the correct order:
+| Argument                 | Description            | Example                         |
+| ------------------------ | ---------------------- | ------------------------------- |
+| `--isgui=true or false`  | Enable or disable Navisworks UI | `--isgui=false`        |
+| `--open=<file>`          | Open Navisworks file   | `--open=model.nwd`              |
+| `--append=<file1;file2>` | Append multiple models | `--append="a.nwc;b.rvm"`        |
+| `--orientation=(x,y,z)`  | Rotation in degrees    | `--orientation=(45,0,0)`        |
+| `--scale=(x,y,z)`        | Scale factors          | `--scale=(1,1,0.5)`             |
+| `--position=(x,y,z)`     | Translation offset     | `--position=(10,0,5)`           |
+| `--colour=(r,g,b)`       | RGB override (0–255)   | `--colour=(0,255,0)`            |
+| `--transparency=<value>` | Transparency (0.0–1.0) | `--transparency=0.5`            |
+| `--save=<file>`          | Save output NWD        | `--save=final.nwd`              |
+
+---
+
+## 🧩 Internal Execution Workflow
+
+Internally, the CLI parses arguments and executes API calls in a controlled sequence:
 
 ```csharp
 cli.OpenNavisworks(...)
@@ -91,50 +132,90 @@ cli.SetOrientation(...)
 cli.SetScale(...)
 cli.SetPosition(...)
 cli.SetColour(...)
-cli.SetTransperancy(...)
+cli.SetTransparency(...)
 cli.SaveNWD(...)
 ```
 
-Each step is optional—if an argument is missing, the step is skipped.
+Each step is optional and executed only when the corresponding argument is supplied.
 
 ---
 
+## 🏗 Architecture Overview
 
-# 🔮 **Future Scope**
+NavisworksCLI is built on top of:
 
-### **1. Attribute‑Based Colour Overrides**
-A powerful enhancement would be:
+* Autodesk Navisworks Automation API
+* Autodesk Navisworks Integrated API
 
-- Read model item attributes  
-- Apply colour overrides based on rules  
-- Example:  
-  - If `Material = Steel` → Colour = Gray  
-  - If `Status = Delayed` → Colour = Red  
+Design goals:
 
-This enables:
+* Minimal memory footprint
+* Deterministic execution order
+* Script-friendly interface
+* Automation-safe (headless capable)
+* Extensible internal structure
 
-- Automated visual reporting  
-- Rule‑based model classification  
-- Integration with external metadata systems  
+---
 
-### **2. Batch Processing of Multiple Models**
-Support for:
+## 🔮 Roadmap / Future Enhancements
 
-```
+### 🎨 Attribute-Based Colour Rules
+
+Planned support for rule-based visual automation:
+
+Example:
+
+* `Material = Steel` → Gray
+* `Status = Delayed` → Red
+
+Benefits:
+
+* Automated QA visualization
+* Model classification
+* Metadata-driven reporting
+* BIM data analytics workflows
+
+---
+
+### 📁 Batch Processing Mode
+
+Execute multiple jobs from a single configuration:
+
+```bash
 NavisworksCLI.exe --batch="jobs.json"
 ```
 
-### **3. JSON/YAML Configuration Mode**
-Instead of long CLI commands:
+---
 
-```
+### 📄 Configuration File Support
+
+Replace long CLI commands with structured configs:
+
+```bash
 NavisworksCLI.exe --config="settings.json"
 ```
 
-### **4. Logging & Diagnostics**
-- Operation logs
-- Error logs
-- Performance metrics
+Supports:
 
-### **5. Plugin Architecture**
-Allow custom operations via DLL plugins.
+* JSON
+* YAML
+
+---
+
+## ⚠ Important Notes
+
+* NavisworksCLI requires a licensed installation of Autodesk Navisworks.
+* This tool acts as an automation wrapper and does not bypass Autodesk licensing.
+* Headless mode still requires Navisworks components to be present.
+
+---
+
+## 📄 License
+
+* MIT License
+
+---
+
+## 🤝 Contributions
+
+Contributions are welcome.
