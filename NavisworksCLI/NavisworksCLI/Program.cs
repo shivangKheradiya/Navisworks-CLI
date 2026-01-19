@@ -11,8 +11,6 @@ namespace NavisworksCLI
     {
         static void Main(string[] args)
         {
-            Debugger.Launch();
-
             var parsed = ParseArguments(args);
             var cli = new NavisworksCLI();
 
