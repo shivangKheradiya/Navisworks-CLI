@@ -13,7 +13,7 @@ The tool supports both:
 ## 🚀 **Features**
 
 ### **File Operations**
-- Open Navisworks‑supported files (`.nwd`, `.nwf`, `.nwc`)
+- Open Navisworks‑supported files (`.nwd`, `.nwf`, `.nwc`, etc...)
 - Append multiple models in a single command
 - Save the final model as `.nwd`
 
@@ -29,12 +29,12 @@ The CLI always executes operations in the following sequence:
 
 1. Open file  
 2. Append files  
-3. Set orientation  
-4. Set scale  
-5. Set position  
-6. Set colour  
-7. Set transparency  
-8. Save file  
+3. Set orientation for document  
+4. Set scale for document
+5. Set position for document
+6. Set colour for document
+7. Set transparency for document
+8. Save NWD file
 
 Any missing argument is simply skipped.
 
@@ -42,7 +42,7 @@ Any missing argument is simply skipped.
 
 # 📦 **Installation**
 
-Place the compiled executable (`navicli.exe`) anywhere in your PATH or call it directly.
+Place the compiled executable (`NavisworksCLI.exe`) anywhere in your PATH or call it directly.
 
 ---
 
@@ -50,7 +50,7 @@ Place the compiled executable (`navicli.exe`) anywhere in your PATH or call it d
 
 ### **Example Command**
 ```
-navicli.exe ^
+NavisworksCLI.exe ^
   --isgui=false ^
   --open="C:\db\model.nwd" ^
   --append="C:\db\part1.nwc;C:\db\pa12.step;C:\db\part1ww.rvm;\\Server32\x.nwd" ^
@@ -121,20 +121,20 @@ This enables:
 Support for:
 
 ```
-navicli.exe --batch="jobs.json"
+NavisworksCLI.exe --batch="jobs.json"
 ```
 
 ### **3. JSON/YAML Configuration Mode**
 Instead of long CLI commands:
 
 ```
-navicli.exe --config="settings.json"
+NavisworksCLI.exe --config="settings.json"
 ```
 
 ### **4. Logging & Diagnostics**
-- Operation logs  
-- Error logs  
-- Performance metrics  
+- Operation logs
+- Error logs
+- Performance metrics
 
 ### **5. Plugin Architecture**
 Allow custom operations via DLL plugins.
